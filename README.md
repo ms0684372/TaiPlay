@@ -42,7 +42,7 @@ public void Test()
 - 建議使用 `private`
 - 若需要對外公開，建議使用 Property
 - `m_` + 小駝峰（camelCase）
-- `m_` 可加可不加
+- `m` 可加可不加
 
 ```csharp
 private string m_name;
