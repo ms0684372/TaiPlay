@@ -34,7 +34,7 @@ CREATE TABLE TripRoute(
 	TripRouteId INT IDENTITY(1,1) NOT NULL, CONSTRAINT PK_TripRouteId PRIMARY KEY(TripRouteId),
 	StartItemId INT NOT NULL,
 	EndItemId INT NOT NULL,
-	TransportationId INT NOT NULL,  --TODO:待更新, 串TripTransportation
+	TransportationId INT NOT NULL,
 	CreatedAt DATETIME2(3) NOT NULL CONSTRAINT DF_TripRoute_CreatedAt DEFAULT SYSUTCDATETIME(),
 	UpdatedAt DATETIME2(3) NOT NULL CONSTRAINT DF_TripRoute_UpdatedAt DEFAULT SYSUTCDATETIME(),
 );
@@ -53,3 +53,4 @@ ALTER TABLE TripItem ADD CONSTRAINT FK_TripItem_TripId FOREIGN KEY(TripId) REFER
 
 ALTER TABLE TripRoute ADD CONSTRAINT FK_TripRoute_StartItemId FOREIGN KEY(StartItemId) REFERENCES TripItem(TripItemId);
 ALTER TABLE TripRoute ADD CONSTRAINT FK_TripRoute_EndItemId FOREIGN KEY (EndItemId) REFERENCES TripItem(TripItemId);
+ALTER TABLE TripRoute ADD CONSTRAINT FK_TripRoute_TransportationId FOREIGN KEY(TransportationId) REFERENCES TripTransportation(TransportationId)

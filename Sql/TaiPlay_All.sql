@@ -246,6 +246,7 @@ ALTER TABLE TripItem ADD CONSTRAINT FK_TripItem_TripId FOREIGN KEY(TripId) REFER
 
 ALTER TABLE TripRoute ADD CONSTRAINT FK_TripRoute_StartItemId FOREIGN KEY(StartItemId) REFERENCES TripItem(TripItemId);
 ALTER TABLE TripRoute ADD CONSTRAINT FK_TripRoute_EndItemId FOREIGN KEY (EndItemId) REFERENCES TripItem(TripItemId);
+ALTER TABLE TripRoute ADD CONSTRAINT FK_TripRoute_TransportationId FOREIGN KEY(TransportationId) REFERENCES TripTransportation(TransportationId)
 
 ALTER TABLE TripMember ADD CONSTRAINT FK_TripMember_TripId FOREIGN KEY (TripId) REFERENCES Trip(TripId);
 ALTER TABLE TripMember ADD CONSTRAINT FK_TripMember_UserId FOREIGN KEY (UserId) REFERENCES Users(UserId);
