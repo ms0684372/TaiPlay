@@ -38,3 +38,4 @@ CREATE TABLE dbo.Attractions (
     CONSTRAINT CHK_Longitude CHECK (Longitude BETWEEN -180.0 AND 180.0)
 );
 
+ALTER TABLE Attractions ADD CONSTRAINT FK_Attractions_MapTypeId FOREIGN KEY(MapTypeId) REFERENCES MapType(MapTypeId);

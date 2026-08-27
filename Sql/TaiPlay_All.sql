@@ -241,6 +241,8 @@ GO
 GO
 
 -- 外鍵約束
+ALTER TABLE Attractions ADD CONSTRAINT FK_Attractions_MapTypeId FOREIGN KEY(MapTypeId) REFERENCES MapType(MapTypeId);
+
 ALTER TABLE TripItem ADD CONSTRAINT FK_TripItem_AttractionId FOREIGN KEY(TripId) REFERENCES Attractions(AttractionId);
 ALTER TABLE TripItem ADD CONSTRAINT FK_TripItem_TripId FOREIGN KEY(TripId) REFERENCES Trip(TripId);
 
