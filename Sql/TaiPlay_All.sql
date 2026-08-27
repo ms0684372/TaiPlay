@@ -11,7 +11,7 @@ CREATE TABLE dbo.Attractions (
     AttractionName      NVARCHAR(100) NOT NULL,                                 -- 景點名稱
     ImageUrl               NVARCHAR(2000) NULL,                                       -- 景點圖片
     Description            NVARCHAR(MAX) NULL,                                       --景點介紹  
-    MapType               INT NOT NULL,                                                     --景點分類
+    MapTypeId               INT NOT NULL,                                                     --景點分類
     GourmetFood        NVARCHAR(MAX) NULL,                                       --美食介紹
     City                       NVARCHAR(20) NOT NULL,                                  --縣市
     District                   NVARCHAR(20) NULL,                                          --鄉鎮市區
@@ -82,7 +82,7 @@ CREATE TABLE TripTransportation(
 );
 
 CREATE TABLE MapType(
-	TypeId INT IDENTITY(1,1) NOT NULL, CONSTRAINT PK_MapTypeId PRIMARY KEY(TypeId),
+	MapTypeId INT IDENTITY(1,1) NOT NULL, CONSTRAINT PK_MapTypeId PRIMARY KEY(MapTypeId),
 	TypeName NVARCHAR(100) NOT NULL,
 	ImageUrl NVARCHAR(2000) NOT NULL,
 	IsActive BIT NOT NULL CONSTRAINT DF_MapType_IsActive DEFAULT 1
