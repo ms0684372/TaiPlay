@@ -9,7 +9,7 @@ go
 CREATE TABLE TripMemberIcon (
     IconId INT IDENTITY(1,1) PRIMARY KEY,
     IconName NVARCHAR(50) NOT NULL,
-    ImageUrl NVARCHAR(2000) NOT NULL,
+    ImageUrl NVARCHAR(2000) NULL,
     SortOrder INT NOT NULL DEFAULT 0,
     IsEnabled BIT NOT NULL DEFAULT 1
 );
@@ -35,7 +35,7 @@ CREATE TABLE TripMember (
 CREATE TABLE ExpenseType (
     TypeId INT IDENTITY(1,1) PRIMARY KEY,
     TypeName NVARCHAR(50) NOT NULL,
-    ImageUrl NVARCHAR(2000) NOT NULL,
+    ImageUrl NVARCHAR(2000) NULL,
     SortOrder INT NOT NULL DEFAULT 0,
     IsEnabled BIT NOT NULL DEFAULT 1
 );

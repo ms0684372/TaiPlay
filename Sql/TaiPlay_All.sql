@@ -1,10 +1,25 @@
-IF DB_ID('TaiPlay') IS NULL
-	CREATE DATABASE TaiPlay;
-go
+USE master;
+GO
+
+-- 如果 TaiPlay 已存在，強制中斷連線並刪除資料庫
+IF DB_ID(N'TaiPlay') IS NOT NULL
+BEGIN
+    ALTER DATABASE TaiPlay
+    SET SINGLE_USER
+    WITH ROLLBACK IMMEDIATE;
+
+    DROP DATABASE TaiPlay;
+END
+GO
+
+-- 重新建立乾淨的 TaiPlay 資料庫
+CREATE DATABASE TaiPlay;
+GO
 
 USE TaiPlay;
-go
+GO
 
+-- 金成
 -- 1. 地點類型主表 (Categories/Types)
 CREATE TABLE dbo.Attractions (
     AttractionId            INT IDENTITY(1,1) NOT NULL,                              --景點ID
@@ -38,6 +53,7 @@ CREATE TABLE dbo.Attractions (
     CONSTRAINT CHK_Longitude CHECK (Longitude BETWEEN -180.0 AND 180.0)
 );
 
+-- 厚竣
 CREATE TABLE Trip(
 	TripId INT IDENTITY(1,1) NOT NULL, CONSTRAINT PK_TripId PRIMARY KEY (TripId),
 	UserId INT NOT NULL, 
@@ -65,16 +81,20 @@ CREATE TABLE TripItem(
 
 CREATE TABLE TripRoute(
 	TripRouteId INT IDENTITY(1,1) NOT NULL, CONSTRAINT PK_TripRouteId PRIMARY KEY(TripRouteId),
+    TripId INT NOT NULL,
 	StartItemId INT NOT NULL,
 	EndItemId INT NOT NULL,
-	TransportationId INT NOT NULL,  --TODO:待更新, 串TripTransportation
+	TransportationId INT NOT NULL,
+    Distance INT NULL,
+    SpendTime INT NULL,
+    Routedata NVARCHAR(2000) NULL,
 	CreatedAt DATETIME2(3) NOT NULL CONSTRAINT DF_TripRoute_CreatedAt DEFAULT SYSUTCDATETIME(),
 	UpdatedAt DATETIME2(3) NOT NULL CONSTRAINT DF_TripRoute_UpdatedAt DEFAULT SYSUTCDATETIME(),
 );
 
 CREATE TABLE TripTransportation(
 	TransportationId INT IDENTITY(1,1) NOT NULL, CONSTRAINT PK_Transportation PRIMARY KEY(TransportationId),
-	ImageUrl NVARCHAR(500) NOT NULL,
+	ImageUrl NVARCHAR(500) NULL,
 	Name NVARCHAR(100)NOT NULL,
 	CreatedAt DATETIME2(3) NOT NULL CONSTRAINT DF_TripTransportation_CreatedAt DEFAULT SYSUTCDATETIME(),
 	UpdatedAt DATETIME2(3) NOT NULL CONSTRAINT DF_TripTransportation_UpdatedAt DEFAULT SYSUTCDATETIME(),
@@ -84,14 +104,15 @@ CREATE TABLE TripTransportation(
 CREATE TABLE MapType(
 	MapTypeId INT IDENTITY(1,1) NOT NULL, CONSTRAINT PK_MapTypeId PRIMARY KEY(MapTypeId),
 	TypeName NVARCHAR(100) NOT NULL,
-	ImageUrl NVARCHAR(2000) NOT NULL,
+	ImageUrl NVARCHAR(2000) NULL,
 	IsActive BIT NOT NULL CONSTRAINT DF_MapType_IsActive DEFAULT 1
 );
 
+-- Daisy
 CREATE TABLE TripMemberIcon (
     IconId INT IDENTITY(1,1) PRIMARY KEY,
     IconName NVARCHAR(50) NOT NULL,
-    ImageUrl NVARCHAR(2000) NOT NULL,
+    ImageUrl NVARCHAR(2000) NULL,
     SortOrder INT NOT NULL DEFAULT 0,
     IsEnabled BIT NOT NULL DEFAULT 1
 );
@@ -99,7 +120,7 @@ CREATE TABLE TripMemberIcon (
 -- 行程旅伴表
 CREATE TABLE TripMember (
     MemberId INT IDENTITY(1,1) PRIMARY KEY,
-    TripId INT NOT NULL,
+    TripId INT NULL,
     UserId INT NULL,
     MemberName NVARCHAR(50) NULL,
     IconId INT NULL,
@@ -115,7 +136,7 @@ CREATE TABLE TripMember (
 CREATE TABLE ExpenseType (
     TypeId INT IDENTITY(1,1) PRIMARY KEY,
     TypeName NVARCHAR(50) NOT NULL,
-    ImageUrl NVARCHAR(2000) NOT NULL,
+    ImageUrl NVARCHAR(2000) NULL,
     SortOrder INT NOT NULL DEFAULT 0,
     IsEnabled BIT NOT NULL DEFAULT 1
 );
@@ -162,6 +183,7 @@ CREATE TABLE ExpenseSplit (
     SplitAmount DECIMAL(12,2) NOT NULL,  
 );
 
+-- 小高
 --- City 縣市
 CREATE TABLE City (
     CityId INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
@@ -238,15 +260,19 @@ GO
 GO
 
 -- 外鍵約束
+-- 金成
 ALTER TABLE Attractions ADD CONSTRAINT FK_Attractions_MapTypeId FOREIGN KEY(MapTypeId) REFERENCES MapType(MapTypeId);
 
+-- 厚竣
 ALTER TABLE TripItem ADD CONSTRAINT FK_TripItem_AttractionId FOREIGN KEY(TripId) REFERENCES Attractions(AttractionId);
 ALTER TABLE TripItem ADD CONSTRAINT FK_TripItem_TripId FOREIGN KEY(TripId) REFERENCES Trip(TripId);
 
 ALTER TABLE TripRoute ADD CONSTRAINT FK_TripRoute_StartItemId FOREIGN KEY(StartItemId) REFERENCES TripItem(TripItemId);
+ALTER TABLE TripRoute ADD CONSTRAINT FK_TripRoute_TripId FOREIGN KEY(StartItemId) REFERENCES Trip(TripId);
 ALTER TABLE TripRoute ADD CONSTRAINT FK_TripRoute_EndItemId FOREIGN KEY (EndItemId) REFERENCES TripItem(TripItemId);
 ALTER TABLE TripRoute ADD CONSTRAINT FK_TripRoute_TransportationId FOREIGN KEY(TransportationId) REFERENCES TripTransportation(TransportationId)
 
+-- Daisy
 ALTER TABLE TripMember ADD CONSTRAINT FK_TripMember_TripId FOREIGN KEY (TripId) REFERENCES Trip(TripId);
 ALTER TABLE TripMember ADD CONSTRAINT FK_TripMember_UserId FOREIGN KEY (UserId) REFERENCES Users(UserId);
 ALTER TABLE TripMember ADD CONSTRAINT FK_TripMember_IconId FOREIGN KEY (IconId) REFERENCES TripMemberIcon(IconId);
@@ -262,6 +288,7 @@ ALTER TABLE ExpensePayer ADD CONSTRAINT FK_ExpensePayer_MemberId FOREIGN KEY (Me
 ALTER TABLE ExpenseSplit ADD CONSTRAINT FK_ExpenseSplit_ExpenseId FOREIGN KEY (ExpenseId) REFERENCES Expenses(ExpenseId);
 ALTER TABLE ExpenseSplit ADD CONSTRAINT FK_ExpenseSplit_MemberId FOREIGN KEY (MemberId) REFERENCES TripMember(MemberId);
 
+-- 小高
 ALTER TABLE Users ADD CONSTRAINT FK_Users_CityId FOREIGN KEY (ResidenceCity) REFERENCES City(CityId);
 ALTER TABLE Users ADD CONSTRAINT FK_Users_EducationId FOREIGN KEY (EducationId) REFERENCES Education(EducationId);
 
