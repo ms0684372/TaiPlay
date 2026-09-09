@@ -1,7 +1,8 @@
 USE TaiPlay
 GO
 
---DBCC CHECKIDENT ('Users', RESEED, 0);
+-- 讓指定表的id歸零
+--DBCC CHECKIDENT ('指定表', RESEED, 0);
 --GO
 
 INSERT INTO dbo.MapType (TypeName, SortOrder, ImageUrl) VALUES
@@ -46,7 +47,7 @@ VALUES
     N'台北101',
     N'https://images.example.com/taipei101.jpg',
     N'台北知名地標，可欣賞城市景觀，並提供購物、美食及觀景台等休閒體驗。',
-    1,
+    3,
     N'台灣小吃、餐廳、咖啡廳及各式美食。',
     N'台北市',
     N'信義區',
@@ -92,7 +93,7 @@ VALUES
     N'日月潭',
     N'https://images.example.com/sunmoonlake.jpg',
     N'台灣著名湖泊景點，以湖光山色及環湖景觀聞名，適合自行車、遊船及自然旅遊。',
-    3,
+    1,
     N'邵族特色料理、總統魚、香菇及在地特色小吃。',
     N'南投縣',
     N'魚池鄉',
@@ -115,7 +116,7 @@ VALUES
     N'阿里山國家森林遊樂區',
     N'https://images.example.com/alishan.jpg',
     N'以森林鐵路、日出、雲海、神木及高山森林景觀聞名，是台灣代表性的山林旅遊景點。',
-    4,
+    1,
     N'高山茶、愛玉、竹筒飯及山產料理。',
     N'嘉義縣',
     N'阿里山鄉',
@@ -138,7 +139,7 @@ VALUES
     N'駁二藝術特區',
     N'https://images.example.com/pier2.jpg',
     N'高雄港區重要藝文景點，由舊倉庫群改造而成，結合藝術展覽、文創商店及公共藝術。',
-    5,
+    1,
     N'駁二周邊有海鮮料理、咖啡廳、甜點及各式特色餐飲。',
     N'高雄市',
     N'鹽埕區',
@@ -163,11 +164,15 @@ INSERT INTO dbo.Trip (UserId, ImageUrl, TripName, Description, StartDate, EndDat
     (2, NULL, N'參加網聚', N'來去認親囉', '2026-08-29', '2026-08-30')
 GO
 
+DECLARE @SortOrder INT;
+SELECT @SortOrder = ISNULL(MAX(SortOrder), 0)
+FROM TripItem
+WHERE TripId=1;
 
-INSERT INTO dbo.TripItem (TripId, Title, Description, Day, AttractionId, SortOrder, TransportationId) VALUES
-    (1, N'樹林車站', N'來去車站附近走走', 1, 1, 1, 0, '13:00', 0, '01:00', NULL, 1),
-    (1, N'樹林夜市', N'夜市吃吃喝喝', 1, 2, 2, 0, '13:00', 0, '01:00', NULL, 1),
-    (1, N'樹林秀泰', N'看電影', 1, 3, 3, 0, '13:00', 0, '01:00', NULL, 1)
+INSERT INTO dbo.TripItem (TripId, Title, Description, Day, AttractionId, SortOrder, ArrivalTime, ArrivalTimeSource, StayTimeType, StayDuration, DepartureTime, TransportationId) VALUES
+    (1, N'樹林車站', N'來去車站附近走走', 1, 1, @SortOrder + 1, '13:00:00', 0, 0, '01:00:00', NULL, 1),
+    (1, N'樹林夜市', N'夜市吃吃喝喝', 1, 2, @SortOrder + 2, '13:00:00', 0, 0, '01:00:00', NULL, 1),
+    (1, N'樹林秀泰', N'看電影', 1, 3, @SortOrder + 3, '13:00:00', 0, 0, '01:00:00', NULL, 1)
 GO
 
 INSERT INTO dbo.TripRoute (TripId, StartItemId, EndItemId, TransportationId, Distance, SpendTime, Routedata) VALUES
