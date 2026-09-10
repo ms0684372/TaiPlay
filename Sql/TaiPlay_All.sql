@@ -228,14 +228,18 @@ CREATE TABLE Users (
 GO
 
 --- UserFavorite 使用者最愛資料夾
+
 CREATE TABLE UserFavorite (
     FavoriteFolderId INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
     UserId INT NOT NULL,
     FavoriteFolderName NVARCHAR(100) NOT NULL,
     CreatedAt DATETIME2(3) NOT NULL DEFAULT SYSUTCDATETIME(),
     UpdatedAt DATETIME2(3) NOT NULL DEFAULT SYSUTCDATETIME(),
-    
+    SortOrder INT NOT NULL DEFAULT 0
 );
+GO
+
+CREATE INDEX IDX_UserFavorite_SortOrder ON UserFavorite(SortOrder)
 GO
 
 --- UserFavoriteItems 使用者最愛清單明細
@@ -247,8 +251,6 @@ CREATE TABLE UserFavoriteItems (
     
 );
 GO
-
- -- 因Attractions還未建立 故UserFavoriteItems還未建立完成 --
 
  --- AdminUsers 管理者基本資料
  CREATE TABLE AdminUsers (
