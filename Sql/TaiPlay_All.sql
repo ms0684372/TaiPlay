@@ -21,9 +21,9 @@ GO
 
 -- 金成
 -- 1. 地點類型主表 (Categories/Types)
-CREATE TABLE dbo.Attractions (
-    AttractionId            INT IDENTITY(1,1) NOT NULL,                              --景點ID
-    AttractionName      NVARCHAR(100) NOT NULL,                                 -- 景點名稱
+CREATE TABLE dbo.Places (
+    PlaceId            INT IDENTITY(1,1) NOT NULL,                              --景點ID
+    PlaceName      NVARCHAR(100) NOT NULL,                                 -- 景點名稱
     ImageUrl               NVARCHAR(2000) NULL,                                       -- 景點圖片
     Description            NVARCHAR(MAX) NULL,                                       --景點介紹  
     MapTypeId               INT NOT NULL,                                                     --景點分類
@@ -41,12 +41,12 @@ CREATE TABLE dbo.Attractions (
     BusinessHoursText  NVARCHAR(200) NULL,                                        --營業時間
     AverageRating        DECIMAL(3,2) NULL,                                            --評價
     IsActive                  BIT NOT NULL DEFAULT 1,                                   --狀態
-    CreatedAt              DATETIME2(3) NOT NULL CONSTRAINT DF_Attractions_CreatedAt DEFAULT SYSUTCDATETIME(),     --建立時間
-    UpdatedAt              DATETIME2(3) NOT NULL CONSTRAINT DF_Attractions_UpdatedAt DEFAULT SYSUTCDATETIME(),   --修改時間
+    CreatedAt              DATETIME2(3) NOT NULL CONSTRAINT DF_Places_CreatedAt DEFAULT SYSUTCDATETIME(),     --建立時間
+    UpdatedAt              DATETIME2(3) NOT NULL CONSTRAINT DF_Places_UpdatedAt DEFAULT SYSUTCDATETIME(),   --修改時間
     ParkingInfo             NVARCHAR(500) NULL                                         --停車資訊
 
     -- 主鍵設定
-    CONSTRAINT PK_Attractions PRIMARY KEY CLUSTERED (AttractionId),
+    CONSTRAINT PK_Places PRIMARY KEY CLUSTERED (PlaceId),
 
     -- 經緯度合理值檢查
     CONSTRAINT CHK_Latitude CHECK (Latitude BETWEEN -90.0 AND 90.0),
@@ -72,7 +72,7 @@ CREATE TABLE TripItem(
 	Title NVARCHAR(100) NULL,
 	Description NVARCHAR(500) NULL,
 	Day INT NOT NULL,
-	AttractionId INT NOT NULL,
+	PlaceId INT NOT NULL,
 	SortOrder INT NOT NULL,
     ArrivalTime TIME(0) NOT NULL,
     ArrivalTimeSource TINYINT NOT NULL DEFAULT 0, -- 0:SYSTEM, 1:MANUAL  
@@ -246,7 +246,7 @@ GO
 CREATE TABLE UserFavoriteItems (
     FavoriteItemId INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
     FavoriteFolderId INT NOT NULL,
-    AttractionId INT NOT NULL,
+    PlaceId INT NOT NULL,
     CreatedAt DATETIME2(3) NOT NULL DEFAULT SYSUTCDATETIME(),
     
 );
@@ -270,10 +270,10 @@ GO
 
 -- 外鍵約束
 -- 金成
-ALTER TABLE Attractions ADD CONSTRAINT FK_Attractions_MapTypeId FOREIGN KEY(MapTypeId) REFERENCES MapType(MapTypeId);
+ALTER TABLE Places ADD CONSTRAINT FK_Places_MapTypeId FOREIGN KEY(MapTypeId) REFERENCES MapType(MapTypeId);
 
 -- 厚竣
-ALTER TABLE TripItem ADD CONSTRAINT FK_TripItem_AttractionId FOREIGN KEY(TripId) REFERENCES Attractions(AttractionId);
+ALTER TABLE TripItem ADD CONSTRAINT FK_TripItem_PlaceId FOREIGN KEY(TripId) REFERENCES Places(PlaceId);
 ALTER TABLE TripItem ADD CONSTRAINT FK_TripItem_TripId FOREIGN KEY(TripId) REFERENCES Trip(TripId);
 
 ALTER TABLE TripRoute ADD CONSTRAINT FK_TripRoute_StartItemId FOREIGN KEY(StartItemId) REFERENCES TripItem(TripItemId);
@@ -304,4 +304,4 @@ ALTER TABLE Users ADD CONSTRAINT FK_Users_EducationId FOREIGN KEY (EducationId) 
 ALTER TABLE UserFavorite ADD CONSTRAINT FK_UserFavorite_UserId FOREIGN KEY (UserId) REFERENCES Users(UserId);
 
 ALTER TABLE UserFavoriteItems ADD CONSTRAINT FK_UserFavoriteItems_FolderId FOREIGN KEY (FavoriteFolderId) REFERENCES UserFavorite(FavoriteFolderId);
-ALTER TABLE UserFavoriteItems ADD CONSTRAINT FK_UserFavoriteItems_AttractionId FOREIGN KEY (AttractionId) REFERENCES Attractions(AttractionId);
+ALTER TABLE UserFavoriteItems ADD CONSTRAINT FK_UserFavoriteItems_PlaceId FOREIGN KEY (PlaceId) REFERENCES Places(PlaceId);
