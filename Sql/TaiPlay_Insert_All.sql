@@ -19,9 +19,9 @@ INSERT INTO dbo.TripTransportation (ImageUrl, Name) VALUES
     (NULL, N'走路')
 GO
 
-INSERT INTO dbo.Attractions
+INSERT INTO dbo.Places
 (
-    AttractionName,
+    PlaceName,
     ImageUrl,
     Description,
     MapTypeId,
@@ -169,7 +169,7 @@ SELECT @SortOrder = ISNULL(MAX(SortOrder), 0)
 FROM TripItem
 WHERE TripId=1;
 
-INSERT INTO dbo.TripItem (TripId, Title, Description, Day, AttractionId, SortOrder, ArrivalTime, ArrivalTimeSource, StayTimeType, StayDuration, DepartureTime, TransportationId) VALUES
+INSERT INTO dbo.TripItem (TripId, Title, Description, Day, PlaceId, SortOrder, ArrivalTime, ArrivalTimeSource, StayTimeType, StayDuration, DepartureTime, TransportationId) VALUES
     (1, N'樹林車站', N'來去車站附近走走', 1, 1, @SortOrder + 1, '13:00:00', 0, 0, '01:00:00', NULL, 1),
     (1, N'樹林夜市', N'夜市吃吃喝喝', 1, 2, @SortOrder + 2, '13:00:00', 0, 0, '01:00:00', NULL, 1),
     (1, N'樹林秀泰', N'看電影', 1, 3, @SortOrder + 3, '13:00:00', 0, 0, '01:00:00', NULL, 1)
