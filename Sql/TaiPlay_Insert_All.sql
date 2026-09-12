@@ -158,6 +158,12 @@ VALUES
 );
 GO
 
+INSERT INTO PlaceAndType (PlaceId, MapTypeId) VALUES
+    (1, 1),
+    (2, 1),
+    (3, 1);
+GO
+
 INSERT INTO dbo.Trip (UserId, ImageUrl, TripName, Description, StartDate, EndDate) VALUES
     (1, NULL, N'樹林一日遊', N'樹林鳥不生蛋不好玩QQ', '2026-07-31', '2026-07-31'),
     (1, NULL, N'台北玩兩天', N'地下街真好玩', '2026-08-06', '2026-08-07'),

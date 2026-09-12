@@ -114,6 +114,13 @@ CREATE TABLE MapType(
 	IsActive BIT NOT NULL CONSTRAINT DF_MapType_IsActive DEFAULT 1
 );
 
+use TaiPlay;
+CREATE TABLE PlaceAndType(
+    PlaceId INT NOT NULL,
+    MapTypeId INT NOT NULL,
+    CONSTRAINT PK_PlaceAndType PRIMARY KEY(PlaceId, MapTypeId)
+);
+
 -- Daisy
 CREATE TABLE TripMemberIcon (
     IconId INT IDENTITY(1,1) PRIMARY KEY,
