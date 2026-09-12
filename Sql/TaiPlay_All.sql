@@ -26,7 +26,7 @@ CREATE TABLE dbo.Places (
     PlaceName      NVARCHAR(100) NOT NULL,                                 -- 景點名稱
     ImageUrl               NVARCHAR(2000) NULL,                                       -- 景點圖片
     Description            NVARCHAR(MAX) NULL,                                       --景點介紹  
-    MapTypeId               INT NOT NULL,                                                     --景點分類
+    PlaceTypeId               INT NOT NULL,                                                     --景點分類
     GourmetFood        NVARCHAR(MAX) NULL,                                       --美食介紹
     City                       NVARCHAR(20) NOT NULL,                                  --縣市
     District                   NVARCHAR(20) NULL,                                          --鄉鎮市區
@@ -106,19 +106,19 @@ CREATE TABLE TripTransportation(
 	IsActive bit NOT NULL CONSTRAINT DF_TripTransportation_IsActive DEFAULT 1
 );
 
-CREATE TABLE MapType(
-	MapTypeId INT IDENTITY(1,1) NOT NULL, CONSTRAINT PK_MapTypeId PRIMARY KEY(MapTypeId),
+CREATE TABLE PlaceType(
+	PlaceTypeId INT IDENTITY(1,1) NOT NULL, CONSTRAINT PK_PlaceTypeId PRIMARY KEY(PlaceTypeId),
 	TypeName NVARCHAR(100) NOT NULL,
 	ImageUrl NVARCHAR(2000) NULL,
     SortOrder INT NOT NULL,
-	IsActive BIT NOT NULL CONSTRAINT DF_MapType_IsActive DEFAULT 1
+	IsActive BIT NOT NULL CONSTRAINT DF_PlaceType_IsActive DEFAULT 1
 );
 
 use TaiPlay;
 CREATE TABLE PlaceAndType(
     PlaceId INT NOT NULL,
-    MapTypeId INT NOT NULL,
-    CONSTRAINT PK_PlaceAndType PRIMARY KEY(PlaceId, MapTypeId)
+    PlaceTypeId INT NOT NULL,
+    CONSTRAINT PK_PlaceAndType PRIMARY KEY(PlaceId, PlaceTypeId)
 );
 
 -- Daisy
@@ -277,7 +277,7 @@ GO
 
 -- 外鍵約束
 -- 金成
-ALTER TABLE Places ADD CONSTRAINT FK_Places_MapTypeId FOREIGN KEY(MapTypeId) REFERENCES MapType(MapTypeId);
+ALTER TABLE Places ADD CONSTRAINT FK_Places_PlaceTypeId FOREIGN KEY(PlaceTypeId) REFERENCES PlaceType(PlaceTypeId);
 
 -- 厚竣
 ALTER TABLE TripItem ADD CONSTRAINT FK_TripItem_PlaceId FOREIGN KEY(TripId) REFERENCES Places(PlaceId);

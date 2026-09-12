@@ -5,7 +5,7 @@ GO
 --DBCC CHECKIDENT ('指定表', RESEED, 0);
 --GO
 
-INSERT INTO dbo.MapType (TypeName, SortOrder, ImageUrl) VALUES
+INSERT INTO dbo.PlaceType (TypeName, SortOrder, ImageUrl) VALUES
     (N'景點', 1, NULL),
     (N'美食', 2, NULL),
     (N'購物', 3, NULL)
@@ -24,7 +24,7 @@ INSERT INTO dbo.Places
     PlaceName,
     ImageUrl,
     Description,
-    MapTypeId,
+    PlaceTypeId,
     GourmetFood,
     City,
     District,
@@ -158,7 +158,7 @@ VALUES
 );
 GO
 
-INSERT INTO PlaceAndType (PlaceId, MapTypeId) VALUES
+INSERT INTO PlaceAndType (PlaceId, PlaceTypeId) VALUES
     (1, 1),
     (2, 1),
     (3, 1);
