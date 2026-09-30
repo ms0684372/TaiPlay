@@ -207,79 +207,6 @@ INSERT INTO Educations (EducationName, SortOrder, IsActive) VALUES
     (N'其他', 8, 1);
 GO
 
--- 插入 3 筆會員假資料(密碼無雜湊)
-INSERT INTO Users (Email, PasswordHash, UserName, Phone, ImageUrl, Gender, BirthDate, ResidenceCity, ResidenceAddress, EducationId, IsActive) VALUES
-(
-    N'yating@gmail.com', 
-    N'user1', 
-    N'林雅婷', 
-    N'0912345678', 
-    N'user1.jpg', 
-    0, -- 女性
-    '1995-06-15', 
-    1, -- 臺北市
-    N'信義區市府路1號', 
-    5, -- 大學
-    1
-),
-(
-    N'guanyu@gmail.com', 
-    N'user2', 
-    N'張冠宇', 
-    N'0923456789', 
-    N'user2.jpg', 
-    1, -- 男性
-    '1990-11-20', 
-    4, -- 臺中市
-    N'西屯區臺灣大道三段99號', 
-    6, -- 碩士
-    1
-),
-(
-    N'yijun@gmail.com', 
-    N'user3', 
-    N'黃怡君', 
-    N'0934567890', 
-    N'user3.jpg', 
-    0, -- 女性
-    '1998-03-08', 
-    6, -- 高雄市
-    N'前鎮區成功二路39號', 
-    5, -- 大學
-    1
-);
-GO
-
--- UserFavorites
-INSERT INTO UserFavorites(UserId, FavoriteFolderName, CreatedAt, UpdatedAt, SortOrder)
-VALUES 
-    (1, N'拍照地點', '2026-09-28 15:52:21.913', '2026-09-28 16:33:14.903', 1);
-    GO
-
---UserFavoritesItems
-INSERT INTO UserFavoriteItems (FavoriteFolderId, PlaceId, CreatedAt)
-VALUES 
-    (1, 1, '2026-09-28 16:36:25.607'),
-    (1, 2, '2026-09-28 16:36:25.607'),
-    (1, 3, '2026-09-28 16:36:25.607');
-    GO
-
--- 插入1筆管理者帳號
-INSERT INTO AdminUsers (Account, PasswordHash, AdminName, Phone, Email, IsActive) VALUES
-(
-    N'admin', 
-    N'admin', -- 實務上請使用雜湊後密碼
-    N'系統管理員', 
-    N'0900000000', 
-    N'admin@gmail.com', 
-    1
-);
-GO
-
--- 讓UserId數值歸0
-DBCC CHECKIDENT ('Users', RESEED, 0);
-GO
-
 -- 插入 3 筆會員假資料(密碼有雜湊)
 INSERT INTO Users (Email, PasswordHash, UserName, Phone, ImageUrl, Gender, BirthDate, ResidenceCity, ResidenceAddress, EducationId, IsActive) VALUES
 (
@@ -319,6 +246,32 @@ INSERT INTO Users (Email, PasswordHash, UserName, Phone, ImageUrl, Gender, Birth
     6, -- 高雄市
     N'前鎮區成功二路39號', 
     5, -- 大學
+    1
+);
+GO
+
+-- UserFavorites
+INSERT INTO UserFavorites(UserId, FavoriteFolderName, CreatedAt, UpdatedAt, SortOrder)
+VALUES 
+    (1, N'拍照地點', '2026-09-28 15:52:21.913', '2026-09-28 16:33:14.903', 1);
+    GO
+
+--UserFavoritesItems
+INSERT INTO UserFavoriteItems (FavoriteFolderId, PlaceId, CreatedAt)
+VALUES 
+    (1, 1, '2026-09-28 16:36:25.607'),
+    (1, 2, '2026-09-28 16:36:25.607'),
+    (1, 3, '2026-09-28 16:36:25.607');
+    GO
+
+-- 插入1筆管理者帳號
+INSERT INTO AdminUsers (Account, PasswordHash, AdminName, Phone, Email, IsActive) VALUES
+(
+    N'admin', 
+    N'admin', -- 實務上請使用雜湊後密碼
+    N'系統管理員', 
+    N'0900000000', 
+    N'admin@gmail.com', 
     1
 );
 GO
