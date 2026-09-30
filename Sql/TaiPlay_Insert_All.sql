@@ -250,6 +250,20 @@ INSERT INTO Users (Email, PasswordHash, UserName, Phone, ImageUrl, Gender, Birth
 );
 GO
 
+-- UserFavorites
+INSERT INTO UserFavorites(UserId, FavoriteFolderName, CreatedAt, UpdatedAt, SortOrder)
+VALUES 
+    (1, N'拍照地點', '2026-09-28 15:52:21.913', '2026-09-28 16:33:14.903', 1);
+    GO
+
+--UserFavoritesItems
+INSERT INTO UserFavoriteItems (FavoriteFolderId, PlaceId, CreatedAt)
+VALUES 
+    (1, 1, '2026-09-28 16:36:25.607'),
+    (1, 2, '2026-09-28 16:36:25.607'),
+    (1, 3, '2026-09-28 16:36:25.607');
+    GO
+
 -- 插入1筆管理者帳號
 INSERT INTO AdminUsers (Account, PasswordHash, AdminName, Phone, Email, IsActive) VALUES
 (
@@ -260,12 +274,6 @@ INSERT INTO AdminUsers (Account, PasswordHash, AdminName, Phone, Email, IsActive
     N'admin@gmail.com', 
     1
 );
-GO
-
-SELECT * FROM AdminUsers;
-
-
-DELETE FROM Users;
 GO
 
 -- 讓UserId數值歸0
