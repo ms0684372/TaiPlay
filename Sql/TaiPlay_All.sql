@@ -93,7 +93,7 @@ CREATE TABLE TripRoutes(
 	EndItemId INT NOT NULL,
 	TransportationId INT NOT NULL,
     Distance INT NULL,
-    SpendTime INT NULL,
+    SpendTime TIME(0) NULL,
     Routedata NVARCHAR(2000) NULL,
 	CreatedAt DATETIME2(3) NOT NULL CONSTRAINT DF_TripRoutes_CreatedAt DEFAULT SYSUTCDATETIME(),
 	UpdatedAt DATETIME2(3) NOT NULL CONSTRAINT DF_TripRoutes_UpdatedAt DEFAULT SYSUTCDATETIME(),

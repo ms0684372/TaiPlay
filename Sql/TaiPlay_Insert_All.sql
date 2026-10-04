@@ -175,16 +175,17 @@ SELECT @SortOrder = ISNULL(MAX(SortOrder), 0)
 FROM TripItems
 WHERE TripId=1;
 
-INSERT INTO TripItems (TripId, Title, Description, Day, PlaceId, SortOrder, ArrivalTime, ArrivalTimeSource, StayTimeType, StayDuration, DepartureTime, TransportationId) VALUES
-    (1, N'樹林車站', N'來去車站附近走走', 1, 1, @SortOrder + 1, '13:00:00', 0, 0, '01:00:00', NULL, 1),
-    (1, N'樹林夜市', N'夜市吃吃喝喝', 1, 2, @SortOrder + 2, '13:00:00', 0, 0, '01:00:00', NULL, 1),
-    (1, N'樹林秀泰', N'看電影', 1, 3, @SortOrder + 3, '13:00:00', 0, 0, '01:00:00', NULL, 1)
+INSERT INTO TripItems (TripId, Title, Description, Day, PlaceId, SortOrder, ArrivalTimeSource, ArrivalTime, StayTimeType, StayDuration, DepartureTime, TransportationId) VALUES
+    (1, N'樹林車站', N'來去車站附近走走', 1, 1, @SortOrder + 1, 0, '13:00:00', 0, '0:10:00', NULL, 1),
+    (1, N'樹林夜市', N'夜市吃吃喝喝', 1, 2, @SortOrder + 2, 0, '13:15:00', 0, '01:20:00', NULL, 1),
+    (1, N'樹林秀泰', N'看電影', 1, 3, @SortOrder + 3, 0, '14:50:00', 1, NULL, '17:00:00', 1),
+    (1, N'濟安宮', N'拜拜', 1, 4, @SortOrder + 4, 0, '18:10:00', 1, NULL, '20:00:00', 1)
 GO
 
 INSERT INTO TripRoutes (TripId, StartItemId, EndItemId, TransportationId, Distance, SpendTime, Routedata) VALUES
-    (1, 1, 2, 1, 300, 300, NULL),
-    (1, 1, 2, 1, 300, 300, NULL),
-    (1, 1, 2, 1, 300, 300, NULL)
+    (1, 1, 2, 1, 300, '00:05:00', NULL),
+    (1, 2, 3, 1, 300, '00:15:00', NULL),
+    (1, 3, 4, 1, 300, '01:05:00', NULL)
 GO
 
 INSERT INTO Cities(CityName) VALUES
