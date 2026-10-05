@@ -126,7 +126,7 @@ CREATE TABLE PlacesAndTypes(
     PlaceId INT NOT NULL,
     PlaceTypeId INT NOT NULL,
 
-    CONSTRAINT PK_PlacesAndTypes PRIMARY KEY(PlaceId, PlaceTypeId),
+    CONSTRAINT PK_PlacesAndTypes PRIMARY KEY(PlaceId, PlaceTypeId)
 );
 
 -- Daisy
@@ -135,7 +135,7 @@ CREATE TABLE TripMemberIcons (
     IconName NVARCHAR(50) NOT NULL,
     ImageUrl NVARCHAR(2000) NULL,
     SortOrder INT NOT NULL DEFAULT 0,
-    IsEnabled BIT NOT NULL DEFAULT 1,
+    IsActive BIT NOT NULL DEFAULT 1,
 
     CONSTRAINT PK_TripMemberIcons PRIMARY KEY (IconId),
 );
@@ -163,7 +163,7 @@ CREATE TABLE ExpenseTypes (
     TypeName NVARCHAR(50) NOT NULL,
     ImageUrl NVARCHAR(2000) NULL,
     SortOrder INT NOT NULL DEFAULT 0,
-    IsEnabled BIT NOT NULL DEFAULT 1,
+    IsActive BIT NOT NULL DEFAULT 1,
 
     CONSTRAINT PK_ExpenseTypes PRIMARY KEY (TypeId),
 );
@@ -173,7 +173,7 @@ CREATE TABLE ExpenseSplitTypes (
     SplitTypeId INT IDENTITY(1,1),
     SplitTypeName NVARCHAR(50) NOT NULL,
     Description NVARCHAR(500) NULL,
-    IsEnabled BIT NOT NULL DEFAULT 1,
+    IsActive BIT NOT NULL DEFAULT 1,
     CONSTRAINT PK_ExpenseSplitTypes PRIMARY KEY (SplitTypeId)
 );
 
