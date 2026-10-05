@@ -26,7 +26,7 @@ CREATE TABLE Places (
     PlaceName      NVARCHAR(100) NOT NULL,                                      -- 景點名稱
     ImageUrl               NVARCHAR(2000) NULL,                                        -- 景點圖片
     Description            NVARCHAR(MAX) NULL,                                       --景點介紹  
-    PlaceTypeId          INT NOT NULL,                                                     --景點分類
+    TypeId          INT NOT NULL,                                                     --景點分類
     GourmetFood        NVARCHAR(MAX) NULL,                                       --美食介紹
     City                       NVARCHAR(20) NOT NULL,                                  --縣市
     District                   NVARCHAR(20) NULL,                                          --鄉鎮市區
@@ -113,20 +113,20 @@ CREATE TABLE TripTransportations(
 );
 
 CREATE TABLE PlaceTypes(
-	PlaceTypeId INT IDENTITY(1,1) NOT NULL,
+	TypeId INT IDENTITY(1,1) NOT NULL,
 	TypeName NVARCHAR(100) NOT NULL,
 	ImageUrl NVARCHAR(2000) NULL,
     SortOrder INT NOT NULL CONSTRAINT DF_PlaceTypes_SortOrder DEFAULT 0,
 	IsActive BIT NOT NULL CONSTRAINT DF_PlaceTypes_IsActive DEFAULT 1,
 
-    CONSTRAINT PK_PlaceTypes PRIMARY KEY (PlaceTypeId),
+    CONSTRAINT PK_PlaceTypes PRIMARY KEY (TypeId),
 );
 
 CREATE TABLE PlacesAndTypes(
     PlaceId INT NOT NULL,
-    PlaceTypeId INT NOT NULL,
+    TypeId INT NOT NULL,
 
-    CONSTRAINT PK_PlacesAndTypes PRIMARY KEY(PlaceId, PlaceTypeId)
+    CONSTRAINT PK_PlacesAndTypes PRIMARY KEY(PlaceId, TypeId)
 );
 
 -- Daisy
@@ -313,7 +313,7 @@ GO
 
 -- 外鍵約束
 -- 金成
-ALTER TABLE Places ADD CONSTRAINT FK_Places_PlaceTypeId FOREIGN KEY(PlaceTypeId) REFERENCES PlaceTypes(PlaceTypeId);
+ALTER TABLE Places ADD CONSTRAINT FK_Places_TypeId FOREIGN KEY(TypeId) REFERENCES PlaceTypes(TypeId);
 
 -- 厚竣
 ALTER TABLE TripItems ADD CONSTRAINT FK_TripItems_PlaceId FOREIGN KEY(TripId) REFERENCES Places(PlaceId);
@@ -325,7 +325,7 @@ ALTER TABLE TripRoutes ADD CONSTRAINT FK_TripRoutes_EndItemId FOREIGN KEY (EndIt
 ALTER TABLE TripRoutes ADD CONSTRAINT FK_TripRoutes_TransportationId FOREIGN KEY(TransportationId) REFERENCES TripTransportations(TransportationId)
 
 ALTER TABLE PlacesAndTypes ADD CONSTRAINT FK_PlacesAndTypes_PlaceId FOREIGN KEY (PlaceId) REFERENCES Places(PlaceId);
-ALTER TABLE PlacesAndTypes ADD CONSTRAINT FK_PlacesAndTypes_PlaceTypeId FOREIGN KEY (PlaceTypeId) REFERENCES PlaceTypes(PlaceTypeId);
+ALTER TABLE PlacesAndTypes ADD CONSTRAINT FK_PlacesAndTypes_TypeId FOREIGN KEY (TypeId) REFERENCES PlaceTypes(TypeId);
 
 -- Daisy
 ALTER TABLE TripMembers ADD CONSTRAINT FK_TripMembers_TripId FOREIGN KEY (TripId) REFERENCES Trips(TripId);

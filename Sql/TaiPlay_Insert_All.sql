@@ -24,7 +24,7 @@ INSERT INTO Places
     PlaceName,
     ImageUrl,
     Description,
-    PlaceTypeId,
+    TypeId,
     GourmetFood,
     City,
     District,
@@ -158,7 +158,7 @@ VALUES
 );
 GO
 
-INSERT INTO PlacesAndTypes (PlaceId, PlaceTypeId) VALUES
+INSERT INTO PlacesAndTypes (PlaceId, TypeId) VALUES
     (1, 1),
     (2, 1),
     (3, 1);
@@ -277,7 +277,7 @@ INSERT INTO AdminUsers (Account, PasswordHash, AdminName, Phone, Email, IsActive
 );
 GO
 
-INSERT INTO TripMemberIcons (IconName, ImageUrl, SortOrder, IsEnabled)VALUES 
+INSERT INTO TripMemberIcons (IconName, ImageUrl, SortOrder, IsActive)VALUES 
 (N'男人', NULL, 1, 1),
 (N'女人', NULL, 2, 1),
 (N'男孩', NULL, 3, 1),
