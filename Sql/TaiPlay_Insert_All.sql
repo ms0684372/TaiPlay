@@ -160,8 +160,11 @@ GO
 
 INSERT INTO PlacesAndTypes (PlaceId, TypeId) VALUES
     (1, 1),
-    (2, 1),
-    (3, 1);
+    (1, 2),
+    (2, 3),
+    (3, 2),
+    (4, 1),
+    (5, 2);
 GO
 
 INSERT INTO Trips (UserId, ImageUrl, TripName, Description, StartDate, EndDate) VALUES
