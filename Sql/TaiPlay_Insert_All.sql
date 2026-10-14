@@ -11,12 +11,12 @@ INSERT INTO PlaceTypes (TypeName, SortOrder, ImageUrl) VALUES
     (N'購物', 3, NULL)
 GO
 
-INSERT INTO TripTransportations (ImageUrl, Name) VALUES
-    (NULL, N'自定義'),
-    (NULL, N'汽車'),
-    (NULL, N'摩托車'),
-    (NULL, N'大眾運輸'),
-    (NULL, N'走路')
+INSERT INTO TripTransportations (Name, SortOrder, ImageUrl) VALUES
+    (N'自定義', 1, NULL),
+    (N'汽車', 2, NULL),
+    (N'摩托車', 3, NULL),
+    (N'大眾運輸', 4, NULL),
+    (N'走路', 5, NULL)
 GO
 
 INSERT INTO Places
