@@ -37,13 +37,18 @@ CREATE TABLE Places (
     Transportation        NVARCHAR(MAX) NULL,                                       --交通方式
     Phone                    NVARCHAR(30) NULL,                                          --聯絡電話
     WebsiteURL           NVARCHAR(500) NULL,                                        --官方網站
-    TicketInfo               NVARCHAR(200) NULL,                                        --票價與收費說明
-    BusinessHoursText  NVARCHAR(200) NULL,                                        --營業時間
+    TicketInfo               NVARCHAR(500) NULL,                                        --票價與收費說明
+    BusinessHoursText  NVARCHAR(500) NULL,                                        --營業時間
+    ParkingInfo             NVARCHAR(2000) NULL,                                        --停車資訊
+    Source                    INT NOT NULL DEFAULT 0,                                 --資料來源 0:手動新增 1:觀光局匯入
+    SourceId                 NVARCHAR(50) NULL,                                                             --資料來源ID
+    SourceUpdatedAt   DATETIME2(3) NULL,                                           --紀錄在匯入來源的更新時間
+    ImportedAt              DATETIME2(3) NULL,                                           --匯入時間
+    IsManuallyEdited    BIT NOT NULL DEFAULT 0,                                   --是否手動更新過
     AverageRating        DECIMAL(3,2) NULL,                                            --評價
     IsActive                  BIT NOT NULL DEFAULT 1,                                   --狀態
     CreatedAt              DATETIME2(3) NOT NULL CONSTRAINT DF_Places_CreatedAt DEFAULT SYSUTCDATETIME(),     --建立時間
     UpdatedAt              DATETIME2(3) NOT NULL CONSTRAINT DF_Places_UpdatedAt DEFAULT SYSUTCDATETIME(),   --修改時間
-    ParkingInfo             NVARCHAR(500) NULL,                                        --停車資訊
 
     CONSTRAINT PK_Places PRIMARY KEY (PlaceId),
     -- 經緯度合理值檢查
