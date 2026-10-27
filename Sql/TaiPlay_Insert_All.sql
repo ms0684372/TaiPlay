@@ -8,7 +8,11 @@ GO
 INSERT INTO PlaceTypes (TypeName, SortOrder, ImageUrl) VALUES
     (N'景點', 1, NULL),
     (N'美食', 2, NULL),
-    (N'購物', 3, NULL)
+    (N'購物', 3, NULL),
+    (N'體驗', 4, NULL),
+    (N'住宿', 5, NULL),
+    (N'交通', 6, NULL),
+    (N'其他', 7, NULL)
 GO
 
 INSERT INTO TripTransportations (Name, SortOrder, ImageUrl) VALUES
