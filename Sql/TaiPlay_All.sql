@@ -26,7 +26,6 @@ CREATE TABLE Places (
     PlaceName      NVARCHAR(100) NOT NULL,                                      -- 景點名稱
     ImageUrl               NVARCHAR(2000) NULL,                                        -- 景點圖片
     Description            NVARCHAR(MAX) NULL,                                       --景點介紹  
-    TypeId          INT NOT NULL,                                                     --景點分類
     GourmetFood        NVARCHAR(MAX) NULL,                                       --美食介紹
     City                       NVARCHAR(20) NOT NULL,                                  --縣市
     District                   NVARCHAR(20) NULL,                                          --鄉鎮市區
@@ -319,7 +318,6 @@ GO
 
 -- 外鍵約束
 -- 金成
-ALTER TABLE Places ADD CONSTRAINT FK_Places_TypeId FOREIGN KEY(TypeId) REFERENCES PlaceTypes(TypeId);
 
 -- 厚竣
 ALTER TABLE TripItems ADD CONSTRAINT FK_TripItems_PlaceId FOREIGN KEY(TripId) REFERENCES Places(PlaceId);
