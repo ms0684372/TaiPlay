@@ -48,7 +48,7 @@ VALUES
 -- 1. 台北 101
 (
     N'台北101',
-    N'https://images.example.com/taipei101.jpg',
+    N'https://joan312pi.github.io/taiplay_frontend_html/img/customer/index_banner.jpg',
     N'台北知名地標，可欣賞城市景觀，並提供購物、美食及觀景台等休閒體驗。',
     N'台灣小吃、餐廳、咖啡廳及各式美食。',
     N'台北市',
@@ -70,7 +70,7 @@ VALUES
 -- 2. 國立故宮博物院
 (
     N'國立故宮博物院',
-    N'https://images.example.com/ntm.jpg',
+    N'https://joan312pi.github.io/taiplay_frontend_html/img/customer/index_banner.jpg',
     N'收藏大量珍貴中國藝術文物，是台灣重要的文化與藝術景點。',
     N'故宮周邊提供中式料理、茶飲及特色餐點。',
     N'台北市',
@@ -92,7 +92,7 @@ VALUES
 -- 3. 日月潭
 (
     N'日月潭',
-    N'https://images.example.com/sunmoonlake.jpg',
+    N'https://joan312pi.github.io/taiplay_frontend_html/img/customer/index_banner.jpg',
     N'台灣著名湖泊景點，以湖光山色及環湖景觀聞名，適合自行車、遊船及自然旅遊。',
     N'邵族特色料理、總統魚、香菇及在地特色小吃。',
     N'南投縣',
@@ -114,7 +114,7 @@ VALUES
 -- 4. 阿里山國家森林遊樂區
 (
     N'阿里山國家森林遊樂區',
-    N'https://images.example.com/alishan.jpg',
+    N'https://joan312pi.github.io/taiplay_frontend_html/img/customer/index_banner.jpg',
     N'以森林鐵路、日出、雲海、神木及高山森林景觀聞名，是台灣代表性的山林旅遊景點。',
     N'高山茶、愛玉、竹筒飯及山產料理。',
     N'嘉義縣',
@@ -136,7 +136,7 @@ VALUES
 -- 5. 駁二藝術特區
 (
     N'駁二藝術特區',
-    N'https://images.example.com/pier2.jpg',
+    N'https://joan312pi.github.io/taiplay_frontend_html/img/customer/index_banner.jpg',
     N'高雄港區重要藝文景點，由舊倉庫群改造而成，結合藝術展覽、文創商店及公共藝術。',
     N'駁二周邊有海鮮料理、咖啡廳、甜點及各式特色餐飲。',
     N'高雄市',
