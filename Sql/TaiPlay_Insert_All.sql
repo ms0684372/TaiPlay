@@ -6,21 +6,21 @@ GO
 --GO
 
 INSERT INTO PlaceTypes (TypeName, SortOrder, ImageUrl) VALUES
-    (N'景點', 1, NULL),
-    (N'美食', 2, NULL),
-    (N'購物', 3, NULL),
-    (N'體驗', 4, NULL),
-    (N'住宿', 5, NULL),
-    (N'交通', 6, NULL),
-    (N'其他', 7, NULL)
+    (N'景點', 1, 'https://joan312pi.github.io/taiplay_frontend_html/img/customer/type_06.svg'),
+    (N'美食', 2, 'https://joan312pi.github.io/taiplay_frontend_html/img/customer/type_01.svg'),
+    (N'購物', 3, 'https://joan312pi.github.io/taiplay_frontend_html/img/customer/type_04.svg'),
+    (N'體驗', 4, 'https://joan312pi.github.io/taiplay_frontend_html/img/customer/type_03.svg'),
+    (N'住宿', 5, 'https://joan312pi.github.io/taiplay_frontend_html/img/customer/type_02.svg'),
+    (N'交通', 6, 'https://joan312pi.github.io/taiplay_frontend_html/img/customer/transportation_02.svg'),
+    (N'其他', 7, 'https://joan312pi.github.io/taiplay_frontend_html/img/customer/type_05.svg')
 GO
 
 INSERT INTO TripTransportations (Name, SortOrder, ImageUrl) VALUES
-    (N'自定義', 1, NULL),
-    (N'汽車', 2, NULL),
-    (N'摩托車', 3, NULL),
-    (N'大眾運輸', 4, NULL),
-    (N'走路', 5, NULL)
+    (N'自定義', 1, 'https://joan312pi.github.io/taiplay_frontend_html/img/customer/transportation_01.svg'),
+    (N'汽車', 2, 'https://joan312pi.github.io/taiplay_frontend_html/img/customer/transportation_02.svg'),
+    (N'機車', 3, 'https://joan312pi.github.io/taiplay_frontend_html/img/customer/transportation_03.svg'),
+    (N'大眾運輸', 4, 'https://joan312pi.github.io/taiplay_frontend_html/img/customer/transportation_04.svg'),
+    (N'走路', 5, 'https://joan312pi.github.io/taiplay_frontend_html/img/customer/transportation_05.svg')
 GO
 
 INSERT INTO Places
@@ -166,9 +166,9 @@ INSERT INTO PlacesAndTypes (PlaceId, TypeId) VALUES
 GO
 
 INSERT INTO Trips (UserId, ImageUrl, TripName, Description, StartDate, EndDate) VALUES
-    (1, NULL, N'樹林一日遊', N'樹林鳥不生蛋不好玩QQ', '2026-07-31', '2026-07-31'),
-    (1, NULL, N'台北玩兩天', N'地下街真好玩', '2026-08-06', '2026-08-07'),
-    (2, NULL, N'參加網聚', N'來去認親囉', '2026-08-29', '2026-08-30')
+    (1, 'https://joan312pi.github.io/taiplay_frontend_html/img/logo_400x300.jpg', N'樹林一日遊', N'樹林鳥不生蛋不好玩QQ', '2026-07-31', '2026-07-31'),
+    (1, 'https://joan312pi.github.io/taiplay_frontend_html/img/logo_400x300.jpg', N'台北玩兩天', N'地下街真好玩', '2026-08-06', '2026-08-07'),
+    (2, 'https://joan312pi.github.io/taiplay_frontend_html/img/logo_400x300.jpg', N'參加網聚', N'來去認親囉', '2026-08-29', '2026-08-30')
 GO
 
 DECLARE @SortOrder INT;
@@ -216,7 +216,7 @@ INSERT INTO Users (Email, PasswordHash, UserName, Phone, ImageUrl, Gender, Birth
     N'$2a$12$eImiTXuWVxfM37uY4JANjO5h6JjQeW5W1J6V7b5K4L3m2n1o0p9q2', -- 模擬雜湊密碼
     N'林雅婷', 
     N'0912345678', 
-    N'user1.jpg', 
+    N'https://joan312pi.github.io/taiplay_frontend_html/img/customer/member_pic.jpg', 
     0, -- 女性
     '1995-06-15', 
     1, -- 臺北市
@@ -229,7 +229,7 @@ INSERT INTO Users (Email, PasswordHash, UserName, Phone, ImageUrl, Gender, Birth
     N'$2a$12$fJnjUYvXYygN48vZ5KBmKP6i7KkRfX6X2K7W8c6L5M4n3o2p1q0r3', -- 模擬雜湊密碼
     N'張冠宇', 
     N'0923456789', 
-    N'user2.jpg', 
+    N'https://joan312pi.github.io/taiplay_frontend_html/img/customer/member_pic.jpg', 
     1, -- 男性
     '1990-11-20', 
     4, -- 臺中市
@@ -242,7 +242,7 @@ INSERT INTO Users (Email, PasswordHash, UserName, Phone, ImageUrl, Gender, Birth
     N'$2a$12$gKokVZwXZzhO59wA6LCnLQ7j8LlSgY7Y3L8X9d7M6N5o4p3q2r1s4', -- 模擬雜湊密碼
     N'黃怡君', 
     N'0934567890', 
-    N'user3.jpg', 
+    N'https://joan312pi.github.io/taiplay_frontend_html/img/customer/member_pic.jpg', 
     0, -- 女性
     '1998-03-08', 
     6, -- 高雄市
@@ -279,12 +279,14 @@ INSERT INTO AdminUsers (Account, PasswordHash, AdminName, Phone, Email, IsActive
 GO
 
 INSERT INTO TripMemberIcons (IconName, ImageUrl, SortOrder, IsActive)VALUES 
-(N'男人', NULL, 1, 1),
-(N'女人', NULL, 2, 1),
-(N'男孩', NULL, 3, 1),
-(N'女孩', NULL, 4, 1),
-(N'長者(男)', NULL, 5, 1),
-(N'長者(女)', NULL, 6, 1);
+(N'男人', 'https://joan312pi.github.io/taiplay_frontend_html/img/customer/member_01.svg', 1, 1),
+(N'女人', 'https://joan312pi.github.io/taiplay_frontend_html/img/customer/member_02.svg', 2, 1),
+(N'男孩', 'https://joan312pi.github.io/taiplay_frontend_html/img/customer/member_03.svg', 3, 1),
+(N'女孩', 'https://joan312pi.github.io/taiplay_frontend_html/img/customer/member_04.svg', 4, 1),
+(N'小鳥', 'https://joan312pi.github.io/taiplay_frontend_html/img/customer/member_05.svg', 5, 1),
+(N'貓咪', 'https://joan312pi.github.io/taiplay_frontend_html/img/customer/member_06.svg', 6, 1),
+(N'小狗', 'https://joan312pi.github.io/taiplay_frontend_html/img/customer/member_07.svg', 7, 1),
+(N'大象', 'https://joan312pi.github.io/taiplay_frontend_html/img/customer/member_08.svg', 8, 1);
 
 
 -- 1. 移除舊有的 UNIQUE Constraint
@@ -309,12 +311,12 @@ INSERT INTO TripMembers (TripId, UserId, MemberName, IconId)VALUES
 
 -- 預設費用分類
 INSERT INTO ExpenseTypes (TypeName, ImageUrl, SortOrder) VALUES
-(N'餐飲', NULL, 1),
-(N'交通', NULL, 2),
-(N'住宿', NULL, 3),
-(N'娛樂', NULL, 4),
-(N'購物', NULL, 5),
-(N'其他', NULL, 6);
+(N'餐飲', 'https://joan312pi.github.io/taiplay_frontend_html/img/customer/type_01.svg', 1),
+(N'交通', 'https://joan312pi.github.io/taiplay_frontend_html/img/customer/transportation_03.svg', 2),
+(N'住宿', 'https://joan312pi.github.io/taiplay_frontend_html/img/customer/type_02.svg', 3),
+(N'娛樂', 'https://joan312pi.github.io/taiplay_frontend_html/img/customer/type_03.svg', 4),
+(N'購物', 'https://joan312pi.github.io/taiplay_frontend_html/img/customer/type_04.svg', 5),
+(N'其他', 'https://joan312pi.github.io/taiplay_frontend_html/img/customer/type_07.svg', 6);
 
 -- 預設分帳模式
 INSERT INTO ExpenseSplitTypes (SplitTypeName, Description) VALUES
