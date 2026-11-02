@@ -32,7 +32,7 @@ CREATE TABLE Places (
     Address                 NVARCHAR(200) NULL,                                        --詳細地址
     Latitude                 DECIMAL(9,6) NULL,                                            --緯度
     Longitude               DECIMAL(10,6) NULL,                                          --經度
-    GeoLocation          GEOGRAPHY NULL,                                             --微軟地理空間
+    GeoLocation          AS CASE WHEN Latitude IS NOT NULL AND Longitude IS NOT NULL THEN GEOGRAPHY::Point(Latitude,Longitude,4326) END, --微軟地理空間
     Transportation        NVARCHAR(MAX) NULL,                                       --交通方式
     Phone                    NVARCHAR(30) NULL,                                          --聯絡電話
     WebsiteURL           NVARCHAR(500) NULL,                                        --官方網站
