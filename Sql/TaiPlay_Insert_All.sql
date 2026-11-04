@@ -44,18 +44,18 @@ INSERT INTO Places
     ParkingInfo
 )
 VALUES
--- 1. 台北 101
+-- 1. 臺北 101
 (
-    N'台北101',
+    N'臺北101',
     N'https://joan312pi.github.io/taiplay_frontend_html/img/customer/index_banner.jpg',
-    N'台北知名地標，可欣賞城市景觀，並提供購物、美食及觀景台等休閒體驗。',
-    N'台灣小吃、餐廳、咖啡廳及各式美食。',
-    N'台北市',
+    N'臺北知名地標，可欣賞城市景觀，並提供購物、美食及觀景台等休閒體驗。',
+    N'臺灣小吃、餐廳、咖啡廳及各式美食。',
+    N'臺北市',
     N'信義區',
-    N'台北市信義區信義路五段7號',
+    N'臺北市信義區信義路五段7號',
     25.033968,
     121.564468,
-    N'搭乘台北捷運至台北101/世貿站，步行即可抵達。',
+    N'搭乘臺北捷運至臺北101/世貿站，步行即可抵達。',
     N'02-8101-8800',
     N'https://www.taipei-101.com.tw/',
     N'觀景台依官方公告票價為準。',
@@ -69,14 +69,14 @@ VALUES
 (
     N'國立故宮博物院',
     N'https://joan312pi.github.io/taiplay_frontend_html/img/customer/index_banner.jpg',
-    N'收藏大量珍貴中國藝術文物，是台灣重要的文化與藝術景點。',
+    N'收藏大量珍貴中國藝術文物，是臺灣重要的文化與藝術景點。',
     N'故宮周邊提供中式料理、茶飲及特色餐點。',
-    N'台北市',
+    N'臺北市',
     N'士林區',
-    N'台北市士林區至善路二段221號',
+    N'臺北市士林區至善路二段221號',
     25.102398,
     121.548492,
-    N'可搭乘台北捷運至士林站，再轉乘公車前往。',
+    N'可搭乘臺北捷運至士林站，再轉乘公車前往。',
     N'02-2881-2021',
     N'https://www.npm.gov.tw/',
     N'一般參觀票價依官方公告。',
@@ -90,14 +90,14 @@ VALUES
 (
     N'日月潭',
     N'https://joan312pi.github.io/taiplay_frontend_html/img/customer/index_banner.jpg',
-    N'台灣著名湖泊景點，以湖光山色及環湖景觀聞名，適合自行車、遊船及自然旅遊。',
+    N'臺灣著名湖泊景點，以湖光山色及環湖景觀聞名，適合自行車、遊船及自然旅遊。',
     N'邵族特色料理、總統魚、香菇及在地特色小吃。',
     N'南投縣',
     N'魚池鄉',
     N'南投縣魚池鄉中山路599號',
     23.864820,
     120.915500,
-    N'可由台中搭乘客運前往日月潭，或自行開車前往。',
+    N'可由臺中搭乘客運前往日月潭，或自行開車前往。',
     N'049-2855668',
     N'https://www.sunmoonlake.gov.tw/',
     N'湖區免費參觀，遊船及其他設施另依官方收費。',
@@ -111,7 +111,7 @@ VALUES
 (
     N'阿里山國家森林遊樂區',
     N'https://joan312pi.github.io/taiplay_frontend_html/img/customer/index_banner.jpg',
-    N'以森林鐵路、日出、雲海、神木及高山森林景觀聞名，是台灣代表性的山林旅遊景點。',
+    N'以森林鐵路、日出、雲海、神木及高山森林景觀聞名，是臺灣代表性的山林旅遊景點。',
     N'高山茶、愛玉、竹筒飯及山產料理。',
     N'嘉義縣',
     N'阿里山鄉',
@@ -157,30 +157,6 @@ INSERT INTO PlacesAndTypes (PlaceId, TypeId) VALUES
     (3, 2),
     (4, 1),
     (5, 2);
-GO
-
-INSERT INTO Trips (UserId, ImageUrl, TripName, Description, StartDate, EndDate) VALUES
-    (1, 'https://joan312pi.github.io/taiplay_frontend_html/img/logo_400x300.jpg', N'樹林一日遊', N'樹林鳥不生蛋不好玩QQ', '2026-07-31', '2026-07-31'),
-    (1, 'https://joan312pi.github.io/taiplay_frontend_html/img/logo_400x300.jpg', N'台北玩兩天', N'地下街真好玩', '2026-08-06', '2026-08-07'),
-    (2, 'https://joan312pi.github.io/taiplay_frontend_html/img/logo_400x300.jpg', N'參加網聚', N'來去認親囉', '2026-08-29', '2026-08-30')
-GO
-
-DECLARE @SortOrder INT;
-SELECT @SortOrder = ISNULL(MAX(SortOrder), 0)
-FROM TripItems
-WHERE TripId=1;
-
-INSERT INTO TripItems (TripId, Title, Description, Day, PlaceId, SortOrder, ArrivalTimeSource, ArrivalTime, StayTimeType, StayDuration, DepartureTime, TransportationId) VALUES
-    (1, N'樹林車站', N'來去車站附近走走', 1, 1, @SortOrder + 1, 0, '13:00:00', 0, '0:10:00', NULL, 1),
-    (1, N'樹林夜市', N'夜市吃吃喝喝', 1, 2, @SortOrder + 2, 0, '13:15:00', 0, '01:20:00', NULL, 1),
-    (1, N'樹林秀泰', N'看電影', 1, 3, @SortOrder + 3, 0, '14:50:00', 1, NULL, '17:00:00', 1),
-    (1, N'濟安宮', N'拜拜', 1, 4, @SortOrder + 4, 0, '18:10:00', 1, NULL, '20:00:00', 1)
-GO
-
-INSERT INTO TripRoutes (TripId, StartItemId, EndItemId, TransportationId, Distance, SpendTime, Routedata) VALUES
-    (1, 1, 2, 1, 300, '00:05:00', NULL),
-    (1, 2, 3, 1, 300, '00:15:00', NULL),
-    (1, 3, 4, 1, 300, '01:05:00', NULL)
 GO
 
 INSERT INTO Cities(CityName) VALUES
@@ -272,6 +248,31 @@ INSERT INTO AdminUsers (Account, PasswordHash, AdminName, Phone, Email, IsActive
 );
 GO
 
+
+INSERT INTO Trips (UserId, ImageUrl, TripName, Description, StartDate, EndDate) VALUES
+    (1, 'https://joan312pi.github.io/taiplay_frontend_html/img/logo_400x300.jpg', N'樹林一日遊', N'樹林鳥不生蛋不好玩QQ', '2026-07-31', '2026-07-31'),
+    (1, 'https://joan312pi.github.io/taiplay_frontend_html/img/logo_400x300.jpg', N'臺北玩兩天', N'地下街真好玩', '2026-08-06', '2026-08-07'),
+    (2, 'https://joan312pi.github.io/taiplay_frontend_html/img/logo_400x300.jpg', N'參加網聚', N'來去認親囉', '2026-08-29', '2026-08-30')
+GO
+
+DECLARE @SortOrder INT;
+SELECT @SortOrder = ISNULL(MAX(SortOrder), 0)
+FROM TripItems
+WHERE TripId=1;
+
+INSERT INTO TripItems (TripId, Title, Description, Day, PlaceId, SortOrder, ArrivalTimeSource, ArrivalTime, StayTimeType, StayDuration, DepartureTime, TransportationId) VALUES
+    (1, N'樹林車站', N'來去車站附近走走', 1, 1, @SortOrder + 1, 0, '13:00:00', 0, '0:10:00', NULL, 1),
+    (1, N'樹林夜市', N'夜市吃吃喝喝', 1, 2, @SortOrder + 2, 0, '13:15:00', 0, '01:20:00', NULL, 1),
+    (1, N'樹林秀泰', N'看電影', 1, 3, @SortOrder + 3, 0, '14:50:00', 1, NULL, '17:00:00', 1),
+    (1, N'濟安宮', N'拜拜', 1, 4, @SortOrder + 4, 0, '18:10:00', 1, NULL, '20:00:00', 1)
+GO
+
+INSERT INTO TripRoutes (TripId, StartItemId, EndItemId, TransportationId, Distance, SpendTime, Routedata) VALUES
+    (1, 1, 2, 1, 300, '00:05:00', NULL),
+    (1, 2, 3, 1, 300, '00:15:00', NULL),
+    (1, 3, 4, 1, 300, '01:05:00', NULL)
+GO
+
 INSERT INTO TripMemberIcons (IconName, ImageUrl, SortOrder, IsActive)VALUES 
 (N'男人', 'https://joan312pi.github.io/taiplay_frontend_html/img/customer/member_01.svg', 1, 1),
 (N'女人', 'https://joan312pi.github.io/taiplay_frontend_html/img/customer/member_02.svg', 2, 1),
@@ -281,16 +282,6 @@ INSERT INTO TripMemberIcons (IconName, ImageUrl, SortOrder, IsActive)VALUES
 (N'貓咪', 'https://joan312pi.github.io/taiplay_frontend_html/img/customer/member_06.svg', 6, 1),
 (N'小狗', 'https://joan312pi.github.io/taiplay_frontend_html/img/customer/member_07.svg', 7, 1),
 (N'大象', 'https://joan312pi.github.io/taiplay_frontend_html/img/customer/member_08.svg', 8, 1);
-
-
--- 1. 移除舊有的 UNIQUE Constraint
-ALTER TABLE TripMembers 
-DROP CONSTRAINT UQ_TripMembers_Trip_User;
-
--- 2. 建立 Filtered Unique Index（只限制有註冊 UserId 的會員不能重複加入）
-CREATE UNIQUE NONCLUSTERED INDEX UX_TripMembers_Trip_User
-ON TripMembers (TripId, UserId)
-WHERE UserId IS NOT NULL;
 
 -- 行程旅伴表
 INSERT INTO TripMembers (TripId, UserId, MemberName, IconId)VALUES 

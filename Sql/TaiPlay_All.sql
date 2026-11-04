@@ -20,7 +20,6 @@ USE TaiPlay;
 GO
 
 -- 金成
--- 1. 地點類型主表 (Categories/Types)
 CREATE TABLE Places (
     PlaceId            INT IDENTITY(1,1) NOT NULL,                                    --景點ID
     PlaceName      NVARCHAR(100) NOT NULL,                                      -- 景點名稱
@@ -32,7 +31,7 @@ CREATE TABLE Places (
     Address                 NVARCHAR(200) NULL,                                        --詳細地址
     Latitude                 DECIMAL(9,6) NULL,                                            --緯度
     Longitude               DECIMAL(10,6) NULL,                                          --經度
-    GeoLocation          AS CASE WHEN Latitude IS NOT NULL AND Longitude IS NOT NULL THEN GEOGRAPHY::Point(Latitude,Longitude,4326) END, --微軟地理空間
+    GeoLocation          AS CASE WHEN Latitude IS NOT NULL AND Longitude IS NOT NULL THEN GEOGRAPHY::Point(Latitude,Longitude,4326) END PERSISTED, --微軟地理空間
     Transportation        NVARCHAR(MAX) NULL,                                       --交通方式
     Phone                    NVARCHAR(30) NULL,                                          --聯絡電話
     WebsiteURL           NVARCHAR(500) NULL,                                        --官方網站
@@ -65,7 +64,7 @@ CREATE TABLE Trips(
 	StartDate DATE NOT NULL,
 	EndDate DATE NOT NULL,
 	CreatedAt DATETIME2(3) NOT NULL CONSTRAINT DF_Trips_CreatedAt DEFAULT SYSUTCDATETIME(),
-	UpdatedAt DATETIME2(3) NOT NULL CONSTRAINT DF_Trips_UpdatedAt DEFAULT SYSUTCDATETIME()
+	UpdatedAt DATETIME2(3) NOT NULL CONSTRAINT DF_Trips_UpdatedAt DEFAULT SYSUTCDATETIME(),
 
     CONSTRAINT PK_Trips PRIMARY KEY (TripId),
 );
@@ -148,7 +147,7 @@ CREATE TABLE TripMemberIcons (
 -- 行程旅伴表
 CREATE TABLE TripMembers (
     MemberId INT IDENTITY(1,1),
-    TripId INT NULL,
+    TripId INT NOT NULL,
     UserId INT NULL,
     MemberName NVARCHAR(50) NULL,
     IconId INT NULL,
@@ -157,10 +156,9 @@ CREATE TABLE TripMembers (
     IsDeleted BIT NOT NULL DEFAULT 0,
 
     CONSTRAINT PK_TripMembers PRIMARY KEY (MemberId),
-    -- 確保同一個會員不會重複加入同一個行程
-    CONSTRAINT UQ_TripMembers_Trip_User UNIQUE (TripId, UserId)
+    -- 確保同一個會員不會重複加入同一個行程（只限制有註冊 UserId 的會員不能重複加入）
+    INDEX UX_TripMembers_Trip_User UNIQUE NONCLUSTERED (TripId, UserId) WHERE UserId IS NOT NULL
 );
-
 
 --  費用分類表 (交通、住宿、用餐...)
 CREATE TABLE ExpenseTypes (
@@ -282,9 +280,6 @@ CREATE TABLE UserFavorites (
 );
 GO
 
-CREATE INDEX IDX_UserFavorites_UserId_SortOrder ON UserFavorites(UserId, SortOrder)
-GO
-
 --- UserFavoriteItems 使用者最愛清單明細
 CREATE TABLE UserFavoriteItems (
     FavoriteItemId INT IDENTITY(1,1) NOT NULL,
@@ -293,6 +288,7 @@ CREATE TABLE UserFavoriteItems (
     CreatedAt DATETIME2(3) NOT NULL DEFAULT SYSUTCDATETIME(),
 
     CONSTRAINT PK_UserFavoriteItems PRIMARY KEY (FavoriteItemId),
+    CONSTRAINT UQ_UserFavoriteItems_Folder_Place UNIQUE (FavoriteFolderId, PlaceId),
 );
 GO
 
@@ -308,7 +304,7 @@ GO
     UpdatedAt DATETIME2(3) NOT NULL CONSTRAINT DF_AdminUsers_UpdateAt DEFAULT SYSUTCDATETIME(),
     LoginTime DATETIME2(3) NULL,
     IsActive BIT NOT NULL DEFAULT 1,
-    SortOrder INT NOT NULL DEFAULT 0
+    SortOrder INT NOT NULL DEFAULT 0,
 
     CONSTRAINT PK_AdminUsers PRIMARY KEY (AdminId),
     CONSTRAINT UQ_AdminUsers_Account UNIQUE (Account),
@@ -316,36 +312,48 @@ GO
 );
 GO
 
--- 外鍵約束
+-- 外鍵約束、索引
 -- 金成
 
 -- 厚竣
-ALTER TABLE TripItems ADD CONSTRAINT FK_TripItems_PlaceId FOREIGN KEY(TripId) REFERENCES Places(PlaceId);
+ALTER TABLE Trips ADD CONSTRAINT FK_Trips_UserId FOREIGN KEY(UserId) REFERENCES Users(UserId);
+CREATE INDEX IX_Trips_UserId ON Trips(UserId);
+
+ALTER TABLE TripItems ADD CONSTRAINT FK_TripItems_PlaceId FOREIGN KEY(PlaceId) REFERENCES Places(PlaceId);
 ALTER TABLE TripItems ADD CONSTRAINT FK_TripItems_TripId FOREIGN KEY(TripId) REFERENCES Trips(TripId);
+ALTER TABLE TripItems ADD CONSTRAINT FK_TripItems_TransportationId FOREIGN KEY(TransportationId) REFERENCES TripTransportations(TransportationId);
+CREATE INDEX IX_TripItems_TripId ON TripItems(TripId);
+CREATE INDEX IX_TripItems_PlaceId ON TripItems(PlaceId);
 
 ALTER TABLE TripRoutes ADD CONSTRAINT FK_TripRoutes_StartItemId FOREIGN KEY(StartItemId) REFERENCES TripItems(TripItemId);
-ALTER TABLE TripRoutes ADD CONSTRAINT FK_TripRoutes_TripId FOREIGN KEY(StartItemId) REFERENCES Trips(TripId);
+ALTER TABLE TripRoutes ADD CONSTRAINT FK_TripRoutes_TripId FOREIGN KEY(TripId) REFERENCES Trips(TripId);
 ALTER TABLE TripRoutes ADD CONSTRAINT FK_TripRoutes_EndItemId FOREIGN KEY (EndItemId) REFERENCES TripItems(TripItemId);
-ALTER TABLE TripRoutes ADD CONSTRAINT FK_TripRoutes_TransportationId FOREIGN KEY(TransportationId) REFERENCES TripTransportations(TransportationId)
+ALTER TABLE TripRoutes ADD CONSTRAINT FK_TripRoutes_TransportationId FOREIGN KEY(TransportationId) REFERENCES TripTransportations(TransportationId);
+CREATE INDEX IX_TripRoutes_TripId ON TripRoutes(TripId);
 
 ALTER TABLE PlacesAndTypes ADD CONSTRAINT FK_PlacesAndTypes_PlaceId FOREIGN KEY (PlaceId) REFERENCES Places(PlaceId);
 ALTER TABLE PlacesAndTypes ADD CONSTRAINT FK_PlacesAndTypes_TypeId FOREIGN KEY (TypeId) REFERENCES PlaceTypes(TypeId);
+CREATE INDEX IX_PlacesAndTypes_TypeId ON PlacesAndTypes(TypeId);
 
 -- Daisy
 ALTER TABLE TripMembers ADD CONSTRAINT FK_TripMembers_TripId FOREIGN KEY (TripId) REFERENCES Trips(TripId);
 ALTER TABLE TripMembers ADD CONSTRAINT FK_TripMembers_UserId FOREIGN KEY (UserId) REFERENCES Users(UserId);
 ALTER TABLE TripMembers ADD CONSTRAINT FK_TripMembers_IconId FOREIGN KEY (IconId) REFERENCES TripMemberIcons(IconId);
+CREATE INDEX IX_TripMembers_TripId ON TripMembers(TripId);
 
 ALTER TABLE Expenses ADD CONSTRAINT FK_Expenses_TripId FOREIGN KEY (TripId) REFERENCES Trips(TripId);
 ALTER TABLE Expenses ADD CONSTRAINT FK_Expenses_TripItemId FOREIGN KEY (TripItemId) REFERENCES TripItems(TripItemId);
 ALTER TABLE Expenses ADD CONSTRAINT FK_Expenses_TypeId FOREIGN KEY (TypeId) REFERENCES ExpenseTypes(TypeId);
 ALTER TABLE Expenses ADD CONSTRAINT FK_Expenses_SplitTypeId FOREIGN KEY (SplitTypeId) REFERENCES ExpenseSplitTypes(SplitTypeId);
+CREATE INDEX IX_Expenses_TripId ON Expenses(TripId);
 
 ALTER TABLE ExpensePayers ADD CONSTRAINT FK_ExpensePayers_ExpenseId FOREIGN KEY (ExpenseId) REFERENCES Expenses(ExpenseId);
 ALTER TABLE ExpensePayers ADD CONSTRAINT FK_ExpensePayers_MemberId FOREIGN KEY (MemberId) REFERENCES TripMembers(MemberId);
+CREATE INDEX IX_ExpensePayers_ExpenseId ON ExpensePayers(ExpenseId);
 
 ALTER TABLE ExpenseSplits ADD CONSTRAINT FK_ExpenseSplits_ExpenseId FOREIGN KEY (ExpenseId) REFERENCES Expenses(ExpenseId);
 ALTER TABLE ExpenseSplits ADD CONSTRAINT FK_ExpenseSplits_MemberId FOREIGN KEY (MemberId) REFERENCES TripMembers(MemberId);
+CREATE INDEX IX_ExpenseSplits_ExpenseId ON ExpenseSplits(ExpenseId);
 
 -- 小高
 ALTER TABLE Users ADD CONSTRAINT FK_Users_CityId FOREIGN KEY (ResidenceCity) REFERENCES Cities(CityId);
@@ -355,3 +363,5 @@ ALTER TABLE UserFavorites ADD CONSTRAINT FK_UserFavorites_UserId FOREIGN KEY (Us
 
 ALTER TABLE UserFavoriteItems ADD CONSTRAINT FK_UserFavoriteItems_FolderId FOREIGN KEY (FavoriteFolderId) REFERENCES UserFavorites(FavoriteFolderId);
 ALTER TABLE UserFavoriteItems ADD CONSTRAINT FK_UserFavoriteItems_PlaceId FOREIGN KEY (PlaceId) REFERENCES Places(PlaceId);
+CREATE INDEX IX_UserFavorites_UserId_SortOrder ON UserFavorites(UserId, SortOrder);
+CREATE INDEX IX_UserFavoriteItems_PlaceId ON UserFavoriteItems(PlaceId);
