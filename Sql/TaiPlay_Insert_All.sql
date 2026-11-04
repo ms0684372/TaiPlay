@@ -39,7 +39,7 @@ INSERT INTO Places
     WebsiteURL,
     TicketInfo,
     BusinessHoursText,
-    AverageRating,
+    EditorRating,
     IsActive,
     ParkingInfo
 )

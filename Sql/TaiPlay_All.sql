@@ -44,6 +44,7 @@ CREATE TABLE Places (
     ImportedAt              DATETIME2(3) NULL,                                           --匯入時間
     IsManuallyEdited    BIT NOT NULL DEFAULT 0,                                   --是否手動更新過
     AverageRating        DECIMAL(3,2) NULL,                                            --評價
+    EditorRating            DECIMAL(2,1) NULL,                                            --小編評價
     IsActive                  BIT NOT NULL DEFAULT 1,                                   --狀態
     CreatedAt              DATETIME2(3) NOT NULL CONSTRAINT DF_Places_CreatedAt DEFAULT SYSUTCDATETIME(),     --建立時間
     UpdatedAt              DATETIME2(3) NOT NULL CONSTRAINT DF_Places_UpdatedAt DEFAULT SYSUTCDATETIME(),   --修改時間
