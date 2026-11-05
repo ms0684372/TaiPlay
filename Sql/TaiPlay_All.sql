@@ -52,7 +52,9 @@ CREATE TABLE Places (
     CONSTRAINT PK_Places PRIMARY KEY (PlaceId),
     -- 經緯度合理值檢查
     CONSTRAINT CHK_Latitude CHECK (Latitude BETWEEN -90.0 AND 90.0),
-    CONSTRAINT CHK_Longitude CHECK (Longitude BETWEEN -180.0 AND 180.0)
+    CONSTRAINT CHK_Longitude CHECK (Longitude BETWEEN -180.0 AND 180.0),
+    --評分合理值檢查
+    CONSTRAINT CHK_EditorRating CHECK (EditorRating BETWEEN 1.0 AND 5.0)
 );
 
 -- 厚竣
