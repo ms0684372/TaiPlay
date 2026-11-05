@@ -263,8 +263,8 @@ CREATE TABLE Users (
     UpdatedAt DATETIME2(3) NOT NULL CONSTRAINT DF_Users_UpdateAt DEFAULT SYSUTCDATETIME(),
     LoginTime DATETIME2(3) NULL,
     IsActive BIT NOT NULL DEFAULT 1,
-    PasswordResetToken NVARCHAR(MAX) NULL;
-    ResetTokenExpires DATETIME2 NULL;
+    PasswordResetToken NVARCHAR(MAX) NULL,
+    ResetTokenExpires DATETIME2 NULL,
 
     CONSTRAINT PK_Users PRIMARY KEY (UserId),
     CONSTRAINT UQ_Users_Email UNIQUE (Email),
