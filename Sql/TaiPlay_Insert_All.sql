@@ -219,13 +219,44 @@ INSERT INTO Users (Email, PasswordHash, UserName, Phone, ImageUrl, Gender, Birth
     N'前鎮區成功二路39號', 
     5, -- 大學
     1
+),
+(
+ N'drangon26830403@gmail.com',
+ N'$2a$11$T.Liy7zRQDnwveKL8IKKKOk98qV/mz51KCcJqKmw8x3ucHYVuCPWO',
+ N'apple',
+ N'0912345678',
+ null,
+ 0,
+ '1994-11-14',
+ 1,
+ null,
+ 5,
+ 1
+),
+(
+ N'joan312pi@gmail.com',
+ N'$2a$11$QLSgyLUIqZ6QXpnTeynBoeS6arTnW2Dtx8KhVDZ3EdP0gwoqux79S',
+ N'Daisy',
+ N'0911222333',
+ null,
+ 0,
+ '1994-11-14',
+ 2,
+ N'中和區',
+ 5,
+ 1
 );
 GO
 
 -- UserFavorites
 INSERT INTO UserFavorites(UserId, FavoriteFolderName, CreatedAt, UpdatedAt, SortOrder)
 VALUES 
-    (1, N'拍照地點', '2026-09-28 15:52:21.913', '2026-09-28 16:33:14.903', 1);
+    (1, N'拍照地點', '2026-09-28 15:52:21.913', '2026-09-28 16:33:14.903', 0),
+    (1, N'口袋清單', '2026-09-28 15:52:21.913', '2026-09-28 16:33:14.903', 1),
+    (2, N'口袋清單', '2026-09-28 15:52:21.913', '2026-09-28 16:33:14.903', 0),
+    (3, N'口袋清單', '2026-09-28 15:52:21.913', '2026-09-28 16:33:14.903', 0),
+    (4, N'口袋清單', '2026-09-28 15:52:21.913', '2026-09-28 16:33:14.903', 0),
+    (5, N'口袋清單', '2026-09-28 15:52:21.913', '2026-09-28 16:33:14.903', 0);
     GO
 
 --UserFavoritesItems
