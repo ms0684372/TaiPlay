@@ -99,7 +99,7 @@ CREATE TABLE TripRoutes(
 	EndItemId INT NOT NULL,
 	TransportationId INT NOT NULL,
     Distance INT NULL,
-    SpendTime TIME(0) NULL,
+    SpendTime INT NULL, -- 交通時間（分鐘），可超過 24 小時
     Routedata NVARCHAR(MAX) NULL,
 	CreatedAt DATETIME2(3) NOT NULL CONSTRAINT DF_TripRoutes_CreatedAt DEFAULT SYSUTCDATETIME(),
 	UpdatedAt DATETIME2(3) NOT NULL CONSTRAINT DF_TripRoutes_UpdatedAt DEFAULT SYSUTCDATETIME(),

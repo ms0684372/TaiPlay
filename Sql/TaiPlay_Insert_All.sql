@@ -299,9 +299,9 @@ INSERT INTO TripItems (TripId, Title, Description, Day, PlaceId, SortOrder, Arri
 GO
 
 INSERT INTO TripRoutes (TripId, StartItemId, EndItemId, TransportationId, Distance, SpendTime, Routedata) VALUES
-    (1, 1, 2, 1, 300, '00:05:00', NULL),
-    (1, 2, 3, 1, 300, '00:15:00', NULL),
-    (1, 3, 4, 1, 300, '01:05:00', NULL)
+    (1, 1, 2, 1, 300, 5, NULL),
+    (1, 2, 3, 1, 300, 15, NULL),
+    (1, 3, 4, 1, 300, 65, NULL)
 GO
 
 INSERT INTO TripMemberIcons (IconName, ImageUrl, SortOrder, IsActive)VALUES 
