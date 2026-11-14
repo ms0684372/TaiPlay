@@ -222,27 +222,40 @@ INSERT INTO Users (Email, PasswordHash, UserName, Phone, ImageUrl, Gender, Birth
 ),
 (
  N'drangon26830403@gmail.com',
- N'$2a$11$T.Liy7zRQDnwveKL8IKKKOk98qV/mz51KCcJqKmw8x3ucHYVuCPWO',
+ N'$2a$11$AKzm3t1pPuiGURls0M.TYODZ.cm4tNp7DDzKPcEm3lfc3TLGSJkUm',
  N'apple',
  N'0912345678',
  null,
- 0,
+ 1,
  '1994-11-14',
  1,
- null,
+ N'大安區復興南路一段390號2樓',
  5,
  1
 ),
 (
- N'joan312pi@gmail.com',
+ N'daisy@gmail.com',
  N'$2a$11$QLSgyLUIqZ6QXpnTeynBoeS6arTnW2Dtx8KhVDZ3EdP0gwoqux79S',
  N'Daisy',
  N'0911222333',
  null,
- 0,
- '1994-11-14',
  2,
- N'中和區',
+ '1994-11-14',
+ 1,
+ N'大安區復興南路一段390號2樓',
+ 5,
+ 1
+),
+(
+ N'ccyu9700@gmail.com',
+ N'$2a$11$4EVWtSdMS9GQs6KOwSYuj.JsGYKYW37WBreRnkJLsaWPJm857BH16',
+ N'Mars',
+ N'0911222333',
+ null,
+ 1,
+ '2000-01-01',
+ 1,
+ N'大安區復興南路一段390號2樓',
  5,
  1
 );
@@ -256,7 +269,8 @@ VALUES
     (2, N'口袋清單', '2026-09-28 15:52:21.913', '2026-09-28 16:33:14.903', 0),
     (3, N'口袋清單', '2026-09-28 15:52:21.913', '2026-09-28 16:33:14.903', 0),
     (4, N'口袋清單', '2026-09-28 15:52:21.913', '2026-09-28 16:33:14.903', 0),
-    (5, N'口袋清單', '2026-09-28 15:52:21.913', '2026-09-28 16:33:14.903', 0);
+    (5, N'口袋清單', '2026-09-28 15:52:21.913', '2026-09-28 16:33:14.903', 0),
+    (6, N'口袋清單', '2026-09-28 15:52:21.913', '2026-09-28 16:33:14.903', 0);
     GO
 
 --UserFavoritesItems
